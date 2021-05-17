@@ -1,19 +1,22 @@
+import interfaces.Filters;
 import jdk.internal.util.xml.impl.Input;
 import models.Contatti;
 import utils.InputHandler;
 
 import java.util.ArrayList;
 
-public class Menu {
+public class Menu implements Filters {
     private Rubrica rubrica;
     public Menu() {
         start();
     }
 
+    @Override
     public void start() {
         this.rubrica = Rubrica.getInstance();
     }
 
+    @Override
     public void mainMenu() {
         System.out.println("Hai " + rubrica.getContattiList().size() + " contatti in rubrica");
         String verbo;
@@ -61,6 +64,7 @@ public class Menu {
         }
     }
 
+    @Override
     public Contatti contattoDaInput() {
         System.out.println("Inserisci il Nome");
         String firstName = InputHandler.nextLn();
@@ -85,6 +89,7 @@ public class Menu {
         return new Contatti(firstName,lastName,number,email);
     }
 
+    @Override
     public void print(ArrayList<Contatti> contatti) {
         for (Contatti contatto:contatti) {
             int i = 1;
