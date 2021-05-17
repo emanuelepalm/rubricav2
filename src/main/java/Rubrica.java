@@ -76,7 +76,7 @@ public class Rubrica implements Actions {
     public void importRubrica(String fileName) {
         try {
        String json = FileHandler.readFile(fileName);
-            this.contattiList = new ArrayList<Contatti>(Arrays.asList(new Gson().fromJson(json, Contatti[].class)));
+            this.contattiList.addAll(new ArrayList<Contatti>(Arrays.asList(new Gson().fromJson(json, Contatti[].class))));
         }catch(Exception e){
             System.out.println(e.getMessage());
         }

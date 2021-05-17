@@ -7,6 +7,7 @@ import utils.InputHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Menu implements Filters {
     private Rubrica rubrica;
@@ -15,6 +16,7 @@ public class Menu implements Filters {
 
     public void mainMenu() {
         if (this.mapRubrica.isEmpty()) {
+            System.out.println("Non esistono rubriche e ruoli!");
             addRubrica();
         } else {
             System.out.println("1)Aggiungere un nuovo ruolo\n2)Visualizza tutti i ruoli\n3)Accedi alla rubrica di un ruolo\n4)Esci");
@@ -29,15 +31,16 @@ public class Menu implements Filters {
                 case 3:
                     System.out.println("Inserisci il ruolo: ");
                     String ruoloName = InputHandler.nextLn();
-                    Rubrica rubrica = new Rubrica();
                     for (Ruoli ruolo: mapRubrica.keySet()) {
                         if(ruolo.getRole().equals(ruoloName)) {
-                            rubrica = mapRubrica.get(ruolo);
+                            Rubrica rubrica = mapRubrica.get(ruolo);
                             ruoloNome = ruoloName;
+                            mainMenuRubrica(rubrica);
+                    } else {
+                            System.out.println("Non esiste nessun ruolo con questo nome!");
                         }
 
                     }
-                    mainMenuRubrica(rubrica);
                     break;
                 case 4:
                     System.exit(1);
@@ -54,9 +57,13 @@ public class Menu implements Filters {
         String nomeRuolo = InputHandler.nextLn();
         System.out.println("Inserisci una descrizione");
         String desc = InputHandler.nextLn();
-        Ruoli ruolo = new Ruoli(nomeRuolo, desc);
-        mapRubrica.put(ruolo, new Rubrica());
-
+        if(InputHandler.checkRuolo(nomeRuolo, mapRubrica.keySet())) {
+            Ruoli ruolo = new Ruoli(nomeRuolo, desc);
+            mapRubrica.put(ruolo, new Rubrica());
+        } else {
+            System.out.println("Questo ruolo esiste già!");
+            addRubrica();
+        }
     }
 
     public void printRuoli() {
