@@ -1,26 +1,35 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import interfaces.Actions;
 import models.Contatti;
+import models.Ruoli;
+import sun.reflect.generics.tree.Tree;
 import utils.FileHandler;
 import utils.InputHandler;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Rubrica implements Actions {
-    private static Rubrica rubricaInstance= null;
     private ArrayList<Contatti> contattiList = new ArrayList<Contatti>();
+    private Map<Object,Object> mapRubrica = new HashMap();
 
-    private Rubrica() {
-    }
-
-    public static Rubrica getInstance() {
-        if (rubricaInstance == null) {
-            rubricaInstance = new Rubrica();
+    public void mapp() {
+        mapRubrica.put("pippo", contattiList);
+        for (Map.Entry entry:mapRubrica.entrySet()) {
+           if(entry.getKey().equals("pippo")){
+               Menu menu = new Menu();
+               menu.print((ArrayList<Contatti>) entry.getValue());
+           }
         }
-        return rubricaInstance;
     }
+
+    public Rubrica() {
+    }
+
+
 
     public ArrayList<Contatti> getContattiList() {
-        return contattiList;
+        return this.contattiList;
     }
 
     public void setContattiList(ArrayList<Contatti> contattiList) {
@@ -30,25 +39,29 @@ public class Rubrica implements Actions {
 
     @Override
     public void addOne(Contatti contatto) {
-        contattiList.add(contatto);
+        this.contattiList.add(contatto);
     }
 
     @Override
     public void updateOne(int i, Contatti contatto) {
-        contattiList.set(i, contatto);
+        this.contattiList.set(i, contatto);
     }
 
     @Override
     public void deleteOne(int i) {
-        contattiList.remove(i);
+        try {
+            this.contattiList.remove(i);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
     public ArrayList<Contatti> searchByName(String firstName) {
         ArrayList<Contatti> searchResult = new ArrayList<Contatti>(10);
-        for (int i = 0; i < contattiList.size(); i++) {
-            if (this.contattiList.get(i).equals(firstName)) {
-                searchResult.add(i, this.contattiList.get(i));
+        for (int i = 0; i < this.contattiList.size(); i++) {
+            if (this.contattiList.get(i).getFirstName().equals(firstName)) {
+                searchResult.add(this.contattiList.get(i));
             }
         }
         return searchResult;
@@ -56,11 +69,16 @@ public class Rubrica implements Actions {
 
     @Override
     public void exportRubrica(String fileName) {
-        FileHandler.writeFile(fileName,rubricaInstance.contattiList);
+        FileHandler.writeFile(fileName,this.contattiList);
     }
 
     @Override
     public void importRubrica(String fileName) {
-        contattiList.addAll(FileHandler.readFile(fileName));
+        try {
+       String json = FileHandler.readFile(fileName);
+            this.contattiList = new ArrayList<Contatti>(Arrays.asList(new Gson().fromJson(json, Contatti[].class)));
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }

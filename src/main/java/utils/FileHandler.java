@@ -19,6 +19,7 @@ public class FileHandler {
             if (file.createNewFile()) {
                 System.out.println("File created: " + file.getName());
                 FileWriter myWriter = new FileWriter(path + fileName + extension);
+
                 myWriter.write(new Gson().toJson(contattiArrayList));
                 myWriter.flush();
                 myWriter.close();
@@ -32,23 +33,22 @@ public class FileHandler {
             e.printStackTrace();
         }
     }
-    public static ArrayList<Contatti> readFile(String fileName)  {
-        ArrayList<Contatti> contatti = new ArrayList<Contatti>();
+    public static String readFile(String fileName)  {
+        json ="";
         try {
             FileReader fileReader =new FileReader(path + fileName + extension);
             int i;
             while ((i = fileReader.read()) != -1) {
+                if(i != -1)
                 json += ((char) i);
             }
             fileReader.close();
-            contatti.addAll(Arrays.asList(new Gson().fromJson(json, Contatti[].class)));
         }catch (FileNotFoundException e) {
             System.err.println(e.getMessage());
         }catch (IOException e) {
             System.err.println(e.getMessage());
         }
-
-        return contatti;
+        return json;
     }
 
 }
