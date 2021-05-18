@@ -11,27 +11,12 @@ import java.util.*;
 
 public class Rubrica implements Actions {
     private ArrayList<Contatti> contattiList = new ArrayList<Contatti>();
-    private Map<Object,Object> mapRubrica = new HashMap();
-
-    public void mapp() {
-        mapRubrica.put("pippo", contattiList);
-        for (Map.Entry entry:mapRubrica.entrySet()) {
-           if(entry.getKey().equals("pippo")){
-               Menu menu = new Menu();
-               menu.print((ArrayList<Contatti>) entry.getValue());
-           }
-        }
-    }
 
     public Rubrica() {
     }
-
-
-
     public ArrayList<Contatti> getContattiList() {
         return this.contattiList;
     }
-
     public void setContattiList(ArrayList<Contatti> contattiList) {
         this.contattiList = contattiList;
     }

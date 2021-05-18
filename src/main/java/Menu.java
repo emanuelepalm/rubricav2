@@ -19,7 +19,7 @@ public class Menu implements Filters {
             System.out.println("Non esistono rubriche e ruoli!");
             addRubrica();
         } else {
-            System.out.println("1)Aggiungere un nuovo ruolo\n2)Visualizza tutti i ruoli\n3)Accedi alla rubrica di un ruolo\n4)Esci");
+            System.out.println("1)Aggiungere un nuovo ruolo\n2)Visualizza tutti i ruoli\n3)Accedi alla rubrica di un ruolo\n4)Modifica un ruolo\n5)Elimina un ruolo\n6)Esci");
             int nextInt = InputHandler.nextInt();
             switch (nextInt) {
                 case 1:
@@ -43,6 +43,36 @@ public class Menu implements Filters {
                     }
                     break;
                 case 4:
+                    System.out.println("Inserisci il nome del ruolo da modificare");
+                    String ruoloSearch = InputHandler.nextLn();
+                    if(!InputHandler.checkRuolo(ruoloSearch, mapRubrica.keySet())) {
+                        System.out.println("Inserisci il nuovo nome del ruolo");
+                        ruoloName = InputHandler.nextLn();
+                        for (Ruoli ruolo: mapRubrica.keySet()) {
+                            if(ruolo.getRole().equals(ruoloSearch)) {
+                                ruolo.setRole(ruoloName);
+                                System.out.println("Ruolo Aggiornato");
+                            }
+                        }
+                    } else {
+                        System.out.println("Questo nome non è associato ad alcun ruolo!");
+                    }
+                    break;
+                case 5:
+                    System.out.println("Inserisci il nome del ruolo da eliminare");
+                    ruoloSearch = InputHandler.nextLn();
+                    if(!InputHandler.checkRuolo(ruoloSearch, mapRubrica.keySet())) {
+                        for (Ruoli ruolo: mapRubrica.keySet()) {
+                            if(ruolo.getRole().equals(ruoloSearch)) {
+                                mapRubrica.remove(ruolo);
+                                System.out.println("Contatto eliminato");
+                            }
+                        }
+                    } else {
+                        System.out.println("Questo nome non è associato ad alcun ruolo!");
+                    }
+                    break;
+                case 6:
                     System.exit(1);
                     break;
                 default:
@@ -128,9 +158,7 @@ public class Menu implements Filters {
                     System.out.println("Inserisci il nome del backup da importare: ");
                     rubrica.importRubrica(InputHandler.nextLn());
                     break;
-                case 8:
-                    rubrica.mapp();
-                    break;
+
                 default:
                     System.err.println("TASTO NON VALIDO!");
                     mainMenu();

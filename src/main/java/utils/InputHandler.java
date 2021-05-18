@@ -70,7 +70,7 @@ public class InputHandler {
     public static boolean checkRuolo(String ruoloName, Set<Ruoli> keys) {
         Boolean isnew = true;
         for (Ruoli ruolo : keys) {
-            if (ruolo.getRole().equals(ruoloName)) {
+            if (ruolo.getRole().equalsIgnoreCase(ruoloName)) {
                 isnew = false;
             }
         }
