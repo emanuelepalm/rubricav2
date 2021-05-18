@@ -1,11 +1,9 @@
+package entities;
+
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import interfaces.Actions;
 import models.Contatti;
-import models.Ruoli;
-import sun.reflect.generics.tree.Tree;
 import utils.FileHandler;
-import utils.InputHandler;
 
 import java.util.*;
 
@@ -54,13 +52,13 @@ public class Rubrica implements Actions {
 
     @Override
     public void exportRubrica(String fileName) {
-        FileHandler.writeFile(fileName,this.contattiList);
+        FileHandler.writeArrayInFile(fileName,this.contattiList);
     }
 
     @Override
     public void importRubrica(String fileName) {
         try {
-       String json = FileHandler.readFile(fileName);
+       String json = FileHandler.readFileRubrica(fileName);
             this.contattiList.addAll(new ArrayList<Contatti>(Arrays.asList(new Gson().fromJson(json, Contatti[].class))));
         }catch(Exception e){
             System.out.println(e.getMessage());

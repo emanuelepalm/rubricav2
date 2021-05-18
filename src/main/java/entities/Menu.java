@@ -1,13 +1,19 @@
+package entities;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import interfaces.Filters;
-import jdk.internal.util.xml.impl.Input;
 import models.Contatti;
+import models.MapModel;
 import models.Ruoli;
+import utils.FileHandler;
 import utils.InputHandler;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class Menu implements Filters {
     private Rubrica rubrica;
@@ -17,10 +23,20 @@ public class Menu implements Filters {
     public void mainMenu() {
         if (this.mapRubrica.isEmpty()) {
             System.out.println("Non esistono rubriche e ruoli!");
-            addRubrica();
-        } else {
-            System.out.println("1)Aggiungere un nuovo ruolo\n2)Visualizza tutti i ruoli\n3)Accedi alla rubrica di un ruolo\n4)Modifica un ruolo\n5)Elimina un ruolo\n6)Esci");
+            System.out.println("Vuoi: \n1)Aggiungere un nuovo ruolo\n2)Importare la rubrica");
             int nextInt = InputHandler.nextInt();
+            switch(nextInt) {
+                case 1:
+                addRubrica();
+                break;
+                case 2:
+                    System.out.println("Inserisci il nome della rubrica da importare");
+                    importMapRubrica(InputHandler.nextLn());
+            }
+        } else {
+            System.out.println("1)Aggiungere un nuovo ruolo\n2)Visualizza tutti i ruoli\n3)Accedi alla rubrica di un ruolo\n4)Modifica un ruolo\n5)Elimina un ruolo\n6)Importa Json\n7)Esporta Json\n0)Esci");
+            int nextInt = InputHandler.nextInt();
+            String fileName;
             switch (nextInt) {
                 case 1:
                     addRubrica();
@@ -77,6 +93,16 @@ public class Menu implements Filters {
                     }
                     break;
                 case 6:
+                    System.out.println("Inserisci il nome del file da caricare:");
+                    fileName = InputHandler.nextLn();
+                    importMapRubrica(fileName);
+                    break;
+                case 7:
+                    System.out.println("Inserisci il nome del file da salvare:");
+                    fileName = InputHandler.nextLn();
+                    FileHandler.writeMapInFile(fileName, mapRubrica);
+                    break;
+                case 0:
                     System.exit(1);
                     break;
                 default:
@@ -106,6 +132,7 @@ public class Menu implements Filters {
             System.out.println("Nome: " + ruolo.getRole() + "\n" + "Descrizione: " + ruolo.getDescription()  + "\n" + rubrica.getContattiList().size() + " contatti");
         }
     }
+
     public void updateRubricaInMap(Rubrica rubrica) {
         for (Ruoli ruolo : mapRubrica.keySet()) {
             if (ruolo.getRole().equals(ruoloNome)) {
@@ -118,13 +145,11 @@ public class Menu implements Filters {
 
     }
 
-
-
     public void mainMenuRubrica(Rubrica rubrica) {
         boolean in = true;
         while (in) {
             System.out.println("\nHai " + rubrica.getContattiList().size() + " contatti in rubrica");
-            System.out.println("Cosa vuoi fare?\n1)Visualizza tutte le voci in rubrica\n2)Aggiungi una voce in rubrica \n3)Modifica una voce in rubrica \n4)Elimina una voce in rubrica \n5)Ricerca per Nome\n6)Esporta Rubrica\n7)Importa Rubrica\n0)Esci ");
+            System.out.println("Cosa vuoi fare?\n1)Visualizza tutte le voci in rubrica\n2)Aggiungi una voce in rubrica \n3)Modifica una voce in rubrica \n4)Elimina una voce in rubrica \n5)Ricerca per Nome\n6)Esporta entities.Rubrica\n7)Importa entities.Rubrica\n0)Esci ");
             int num = InputHandler.nextInt();
             switch (num) {
                 case 0:
@@ -204,6 +229,22 @@ public class Menu implements Filters {
             System.out.println(   "NUMERO:  " + contatto.getNumber());
             System.out.println(   "UID:     " + contatto.getUid());
             i++;
+        }
+    }
+    public void importMapRubrica(String fileName) {
+        try {
+            String json = FileHandler.readFileMap(fileName);
+            ArrayList<MapModel> mapList= new ArrayList<MapModel>(Arrays.asList(new Gson().fromJson(json, MapModel[].class)));
+            for(MapModel entry : mapList) {
+                if(InputHandler.checkRuolo(entry.getRuolo().getRole(), mapRubrica.keySet())) {
+                    mapRubrica.put(entry.getRuolo(),entry.getRubrica());
+                } else {
+                    System.out.println("Errore importando: "+ entry.getRuolo().getRole() +"\nQuesto ruolo esiste già!\nI contatti del ruolo verranno sovrascritti");
+                    mapRubrica.put(InputHandler.getRoleFromName(entry.getRuolo().getRole(), mapRubrica.keySet()),entry.getRubrica());
+                }
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
     }
 

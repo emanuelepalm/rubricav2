@@ -76,5 +76,13 @@ public class InputHandler {
         }
         return isnew;
     }
-
+    public static Ruoli getRoleFromName(String ruoloName, Set<Ruoli> keys) {
+        Ruoli ruoloWithName = new Ruoli();
+        for (Ruoli ruolo : keys) {
+            if (ruolo.getRole().equalsIgnoreCase(ruoloName)) {
+                 ruoloWithName = ruolo;
+            }
+        }
+        return ruoloWithName;
+    }
 }

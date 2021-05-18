@@ -7,6 +7,9 @@ public class Ruoli {
     private String role;
     private String description;
 
+    public Ruoli() {
+    }
+
     public Ruoli(UUID uuid, String role, String description) {
         this.uuid = uuid;
         this.role = role;
