@@ -48,9 +48,12 @@ public class Menu implements Filters {
                     if(!InputHandler.checkRuolo(ruoloSearch, mapRubrica.keySet())) {
                         System.out.println("Inserisci il nuovo nome del ruolo");
                         ruoloName = InputHandler.nextLn();
+                        System.out.println("Inserisci la nuova descrizione");
+                        String desc = InputHandler.nextLn();
                         for (Ruoli ruolo: mapRubrica.keySet()) {
                             if(ruolo.getRole().equals(ruoloSearch)) {
                                 ruolo.setRole(ruoloName);
+                                ruolo.setDescription(desc);
                                 System.out.println("Ruolo Aggiornato");
                             }
                         }
@@ -66,6 +69,7 @@ public class Menu implements Filters {
                             if(ruolo.getRole().equals(ruoloSearch)) {
                                 mapRubrica.remove(ruolo);
                                 System.out.println("Contatto eliminato");
+                                break;
                             }
                         }
                     } else {
@@ -99,7 +103,7 @@ public class Menu implements Filters {
     public void printRuoli() {
         for(Ruoli ruolo: this.mapRubrica.keySet()) {
             Rubrica rubrica = this.mapRubrica.get(ruolo);
-            System.out.println("Nome: " + ruolo.getRole() + " " +  rubrica.getContattiList().size() + " contatti");
+            System.out.println("Nome: " + ruolo.getRole() + "\n" + "Descrizione: " + ruolo.getDescription()  + "\n" + rubrica.getContattiList().size() + " contatti");
         }
     }
     public void updateRubricaInMap(Rubrica rubrica) {
