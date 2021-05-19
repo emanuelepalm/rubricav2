@@ -34,7 +34,7 @@ public class Menu implements Filters {
                     importMapRubrica(InputHandler.nextLn());
             }
         } else {
-            System.out.println("1)Aggiungere un nuovo ruolo\n2)Visualizza tutti i ruoli\n3)Accedi alla rubrica di un ruolo\n4)Modifica un ruolo\n5)Elimina un ruolo\n6)Importa Json\n7)Esporta Json\n0)Esci");
+            System.out.println("1)Aggiungere un nuovo ruolo\n2)Visualizza tutti i ruoli\n3)Accedi alla rubrica di un ruolo\n4)Modifica un ruolo\n5)Elimina un ruolo\n6)Importa Json\n7)Esporta Json\n8)Elimina file o cartelle\n0)Esci");
             int nextInt = InputHandler.nextInt();
             String fileName;
             switch (nextInt) {
@@ -101,6 +101,23 @@ public class Menu implements Filters {
                     System.out.println("Inserisci il nome del file da salvare:");
                     fileName = InputHandler.nextLn();
                     FileHandler.writeMapInFile(fileName, mapRubrica);
+                    break;
+                case 8:
+                    System.out.println("Inserisci\n1)Per eliminare un file\n2)Eliminare tutti i file\n3)Eliminare tutti i file con estensione");
+                    switch (InputHandler.nextInt()) {
+                        case 1:
+                            System.out.println("Inserisci il nome del file o della cartella da eliminare: ");
+                            fileName = InputHandler.nextLn();
+                            FileHandler.deleteFile(fileName);
+                            break;
+                        case 2:
+                            FileHandler.deleteFile(true);
+                            break;
+                        case 3:
+                            System.out.println("Inserisci l'estensione:");
+                            FileHandler.deleteFile(true,InputHandler.nextLn());
+                            break;
+                    }
                     break;
                 case 0:
                     System.exit(1);

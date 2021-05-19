@@ -83,6 +83,7 @@ public class FileHandler {
         }
         return json;
     }
+
     public static String readFileMap(String fileName)  {
         json ="";
         try {
@@ -101,4 +102,68 @@ public class FileHandler {
         return json;
     }
 
+    public static void deleteFile(String fileName) {
+        if(!fileName.endsWith("\\")) {
+            File file = new File(pathMap + fileName + extension);
+            if (file.delete()) {
+                System.out.println("File Cancellato: " + file.getName());
+            } else {
+                System.out.println("Impossibile eliminare il file " + fileName);
+            }
+        } else {
+            File folder = new File(fileName);
+            if(folder.delete()) {
+                System.out.println("Cartella Cancellata: " + folder.getName());
+            }
+            else {
+                System.out.println("Impossibile eliminare la cartella, svuotala e riprova");
+            }
+        }
+    }
+
+    public static void deleteFile(boolean all) {
+        for (File file : new File(pathMap).listFiles()) {
+            if (file.delete()) {
+                System.out.println("File Cancellato: " + file.getName());
+            } else {
+                System.out.println("Impossibile eliminare il file ");
+            }
+        }
+    }
+  public static void deleteFile(boolean all, String extension) {
+      for (File file : new File(pathMap).listFiles()) {
+          if (file.getName().endsWith(extension)) {
+              if (file.delete()) {
+                  System.out.println("File Cancellato: " + file.getName());
+              } else {
+                  System.out.println("Impossibile eliminare il file ");
+              }
+          }
+      }
+  } /*
+  public  void deleteFile(boolean all, String extension) {
+      for (File file : new File(pathMap).listFiles()) {
+          FilenameFilter filenameFilter = new LogFilterFilter(extension);
+          if (int i = 0){
+              if (file.delete()) {
+                  System.out.println("File Cancellato: " + file.getName());
+              } else {
+                  System.out.println("Impossibile eliminare il file ");
+              }
+          }
+      }
+
 }
+    class LogFilterFilter implements FilenameFilter
+    {
+        private String extension;
+        public LogFilterFilter(String extension) {
+            this.extension = extension;
+        }
+        @Override
+        public boolean accept(File dir, String fileName)
+        {
+            return (fileName.endsWith(extension));
+        }
+    }*/
+ }
