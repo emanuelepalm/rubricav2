@@ -95,11 +95,19 @@ public class Menu implements Filters {
                 case 6:
                     System.out.println("Inserisci il nome del file da caricare:");
                     fileName = InputHandler.nextLn();
+                    if(!FileHandler.newDir("map\\")) {
+                    } else {
+                        System.out.println("La cartella è stata creata");
+                    }
                     importMapRubrica(fileName);
                     break;
                 case 7:
                     System.out.println("Inserisci il nome del file da salvare:");
                     fileName = InputHandler.nextLn();
+                    if(!FileHandler.newDir("map\\")) {
+                    } else {
+                        System.out.println("La cartella è stata creata");
+                    }
                     FileHandler.writeMapInFile(fileName, mapRubrica);
                     break;
                 case 8:
@@ -115,7 +123,7 @@ public class Menu implements Filters {
                             break;
                         case 3:
                             System.out.println("Inserisci l'estensione:");
-                            FileHandler.deleteFile(true,InputHandler.nextLn());
+                           new FileHandler().deleteFile(true,InputHandler.nextLn());
                             break;
                     }
                     break;
@@ -198,10 +206,18 @@ public class Menu implements Filters {
                     break;
                 case 6:
                     System.out.println("Inserisci il nome del backup da salvare:");
+                    if(!FileHandler.newDir("rubrica\\")) {
+                    } else {
+                        System.out.println("La cartella è stata creata");
+                    }
                     rubrica.exportRubrica(InputHandler.nextLn());
                     break;
                 case 7:
                     System.out.println("Inserisci il nome del backup da importare: ");
+                    if(!FileHandler.newDir("rubrica\\")) {
+                    } else {
+                        System.out.println("La cartella è stata creata");
+                    }
                     rubrica.importRubrica(InputHandler.nextLn());
                     break;
 
