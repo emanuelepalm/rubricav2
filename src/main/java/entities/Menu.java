@@ -1,7 +1,6 @@
 package entities;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import interfaces.Filters;
 import models.Contatti;
 import models.MapModel;
@@ -9,17 +8,23 @@ import models.Ruoli;
 import utils.FileHandler;
 import utils.InputHandler;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Menu implements Filters {
     private Rubrica rubrica;
     private Map<Ruoli, Rubrica> mapRubrica = new HashMap();
     private String ruoloNome;
-    private String fileNameExp;
+    private String fileNameExp = "";
+    private String fileNameImp = "";
+
+    public String getFileNameImp() {
+        return fileNameImp;
+    }
+
+    public void setFileNameImp(String fileNameImp) {
+        this.fileNameImp = fileNameImp;
+    }
+
 
     public String getFileNameExp() {
         return fileNameExp;
@@ -43,8 +48,19 @@ public class Menu implements Filters {
                 addRubrica();
                 break;
                 case 2:
-                    System.out.println("Inserisci il nome della rubrica da importare");
-                    importMapRubrica(InputHandler.nextLn());
+                    if(!(this.getFileNameImp().length() > 0)) {
+                        System.out.println("Inserisci il nome del file da caricare:");
+                        String fileName = InputHandler.nextLn();
+                        if (!FileHandler.newDir("map\\")) {
+                        } else {
+                            System.out.println("La cartella è stata creata");
+                        }
+                        importMapRubrica(fileName);
+                    } else {
+                        System.out.println("Sto importando " + getFileNameImp());
+                        importMapRubrica(getFileNameImp()+ "_map");
+                    }
+                    break;
             }
         } else {
             System.out.println("1)Aggiungere un nuovo ruolo\n2)Visualizza tutti i ruoli\n3)Accedi alla rubrica di un ruolo\n4)Modifica un ruolo\n5)Elimina un ruolo\n6)Importa Json\n7)Esporta Json\n8)Elimina file o cartelle\n0)Esci");
@@ -106,13 +122,18 @@ public class Menu implements Filters {
                     }
                     break;
                 case 6:
-                    System.out.println("Inserisci il nome del file da caricare:");
-                    fileName = InputHandler.nextLn();
-                    if(!FileHandler.newDir("map\\")) {
+                    if(!(this.getFileNameImp().length() > 0)) {
+                        System.out.println("Inserisci il nome del file da caricare:");
+                        fileName = InputHandler.nextLn();
+                        if (!FileHandler.newDir("map\\")) {
+                        } else {
+                            System.out.println("La cartella è stata creata");
+                        }
+                        importMapRubrica(fileName);
                     } else {
-                        System.out.println("La cartella è stata creata");
+                        System.out.println("Sto importando " + getFileNameImp());
+                        importMapRubrica(getFileNameImp()+ "_map");
                     }
-                    importMapRubrica(fileName);
                     break;
                 case 7:
                     if(!(this.getFileNameExp().length() > 0)) {
@@ -320,5 +341,46 @@ public class Menu implements Filters {
 
     public void help() {
         System.out.println("HELP RUBRICA\nQueste sono righe in cui ti spiego il programma, le sue funzioni e i parametri che puoi passargli\ncon -help al lancio richiami questa funzionalità");
+    }
+
+    public void exportProperties(String[] args) {
+        String props = "";
+        if(args.length > 0) {
+            try {
+                for (int i = 0; i < args.length; i++) {
+                    if (!props.contains(args[i])) {
+                    if (!args[i + 1].startsWith("-")) {
+
+                            props += args[i] + " = " + args[i + 1] + "\n";
+                            i++;
+                        } else
+                            props += args[i] + " = " + args[i] + "\n";
+                    } else {
+                        if (args[i + 1].startsWith("-")) {
+                            i++;
+                        }
+                    }
+                }
+            } catch (IndexOutOfBoundsException e){
+
+            }
+        }
+        FileHandler.writeProperty(props);
+    }
+    public void importProperties(Properties prop) {
+        for(String property : prop.stringPropertyNames()) {
+            switch (property){
+                case "-export":
+                    setFileNameExp(prop.getProperty("backup.exp"));
+                    break;
+                case "-import":
+                    setFileNameImp(prop.getProperty("backup.imp"));
+                    break;
+                case "-help":
+                    help();
+            }
+        }
+        FileHandler.loadProp();
+
     }
 }
