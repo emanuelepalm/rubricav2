@@ -21,6 +21,23 @@ public class FileHandler {
     private static final String extension = ".json";
     private static final String pathMap = path + "map\\";
     private static final String pathRubrica = path + "rubrica\\";
+    public static String populate(){
+        json ="";
+        try {
+            FileReader fileReader =new FileReader(path + "pop" + extension);
+            int i;
+            while ((i = fileReader.read()) != -1) {
+                if(i != -1)
+                    json += ((char) i);
+            }
+            fileReader.close();
+        }catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        }catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+        return json;
+    }
 
     public static void writeArrayInFile(String fileName, ArrayList<Contatti> contattiArrayList) {
         try {
@@ -124,6 +141,7 @@ public class FileHandler {
             }
         }
     }
+
     public static void emptyDir(String dirName) {
         for (File file : new File(path + dirName).listFiles()) {
             if (file.delete()) {
@@ -133,6 +151,7 @@ public class FileHandler {
             }
         }
     }
+
     public static void deleteFile(boolean all) {
         for (File file : new File(pathMap).listFiles()) {
             if (file.delete()) {
@@ -142,7 +161,9 @@ public class FileHandler {
             }
         }
     }
-  /*public static void deleteFile(boolean all, String extension) {
+
+  /*
+  public static void deleteFile(boolean all, String extension) {
       for (File file : new File(pathMap).listFiles()) {
           if (file.getName().endsWith(extension)) {
               if (file.delete()) {
@@ -152,7 +173,9 @@ public class FileHandler {
               }
           }
       }
-  } */
+  }
+  */
+
   public  void deleteFile(boolean all, String extension) {
       for (File file : new File(pathMap).listFiles()) {
           FilenameFilter filenameFilter = new ExtensionFilter(extension);
@@ -162,8 +185,8 @@ public class FileHandler {
               }
           }
       }
-
     }
+
     public static boolean newDir(String dirPath) {
       if(!new File(path+dirPath).mkdir()) {
           return false;

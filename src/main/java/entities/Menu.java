@@ -19,6 +19,19 @@ public class Menu implements Filters {
     private Rubrica rubrica;
     private Map<Ruoli, Rubrica> mapRubrica = new HashMap();
     private String ruoloNome;
+    private String fileNameExp;
+
+    public String getFileNameExp() {
+        return fileNameExp;
+    }
+
+    public void setFileNameExp(String fileNameExp) {
+        this.fileNameExp = fileNameExp;
+    }
+
+    public Menu() {
+
+    }
 
     public void mainMenu() {
         if (this.mapRubrica.isEmpty()) {
@@ -102,13 +115,17 @@ public class Menu implements Filters {
                     importMapRubrica(fileName);
                     break;
                 case 7:
-                    System.out.println("Inserisci il nome del file da salvare:");
-                    fileName = InputHandler.nextLn();
-                    if(!FileHandler.newDir("map\\")) {
+                    if(!(this.getFileNameExp().length() > 0)) {
+                        System.out.println("Inserisci il nome del file da salvare:");
+                        fileName = InputHandler.nextLn();
+                        if(!FileHandler.newDir("map\\")) {
+                        } else {
+                            System.out.println("La cartella è stata creata");
+                        }
+                        FileHandler.writeMapInFile(fileName, mapRubrica);
                     } else {
-                        System.out.println("La cartella è stata creata");
+                        FileHandler.writeMapInFile(getFileNameExp()+"_map",mapRubrica);
                     }
-                    FileHandler.writeMapInFile(fileName, mapRubrica);
                     break;
                 case 8:
                     System.out.println("Inserisci\n1)Per eliminare un file\n2)Eliminare tutti i file\n3)Eliminare tutti i file con estensione");
@@ -162,13 +179,11 @@ public class Menu implements Filters {
         for (Ruoli ruolo : mapRubrica.keySet()) {
             if (ruolo.getRole().equals(ruoloNome)) {
                 mapRubrica.put(ruolo, rubrica);
+                break;
             }
         }
     }
 
-    public Menu() {
-
-    }
 
     public void mainMenuRubrica(Rubrica rubrica) {
         boolean in = true;
@@ -205,12 +220,16 @@ public class Menu implements Filters {
                     }
                     break;
                 case 6:
-                    System.out.println("Inserisci il nome del backup da salvare:");
-                    if(!FileHandler.newDir("rubrica\\")) {
+                    if(!(this.getFileNameExp().length() > 0)) {
+                        System.out.println("Inserisci il nome del backup da salvare:");
+                        if (!FileHandler.newDir("rubrica\\")) {
+                        } else {
+                            System.out.println("La cartella è stata creata");
+                        }
+                        rubrica.exportRubrica(InputHandler.nextLn());
                     } else {
-                        System.out.println("La cartella è stata creata");
+                        rubrica.exportRubrica(getFileNameExp()+"_rubrica");
                     }
-                    rubrica.exportRubrica(InputHandler.nextLn());
                     break;
                 case 7:
                     System.out.println("Inserisci il nome del backup da importare: ");
@@ -281,4 +300,25 @@ public class Menu implements Filters {
         }
     }
 
+    public void populate() {
+        try {
+            String json = FileHandler.populate();
+            ArrayList<MapModel> mapList= new ArrayList<MapModel>(Arrays.asList(new Gson().fromJson(json, MapModel[].class)));
+            for(MapModel entry : mapList) {
+                if(InputHandler.checkRuolo(entry.getRuolo().getRole(), mapRubrica.keySet())) {
+                    mapRubrica.put(entry.getRuolo(),entry.getRubrica());
+                } else {
+                    System.out.println("Errore importando: "+ entry.getRuolo().getRole() +"\nQuesto ruolo esiste già!\nI contatti del ruolo verranno sovrascritti");
+                    mapRubrica.put(InputHandler.getRoleFromName(entry.getRuolo().getRole(), mapRubrica.keySet()),entry.getRubrica());
+                }
+            }
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void help() {
+        System.out.println("HELP RUBRICA\nQueste sono righe in cui ti spiego il programma, le sue funzioni e i parametri che puoi passargli\ncon -help al lancio richiami questa funzionalità");
+    }
 }
