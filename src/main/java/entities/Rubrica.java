@@ -19,7 +19,9 @@ public class Rubrica implements Actions {
         this.contattiList = contattiList;
     }
 
-
+    public Contatti addPersona(String firstName, String lastName,String number, String email) {
+        return new Contatti(firstName, lastName, number, email);
+    }
     @Override
     public void addOne(Contatti contatto) {
         this.contattiList.add(contatto);
@@ -31,12 +33,16 @@ public class Rubrica implements Actions {
     }
 
     @Override
-    public void deleteOne(int i) {
+    public boolean deleteOne(int i) {
+        boolean check;
         try {
             this.contattiList.remove(i);
+            check = true;
         }catch(Exception e){
+            check = false;
             System.out.println(e.getMessage());
         }
+        return check;
     }
 
     @Override

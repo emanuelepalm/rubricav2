@@ -48,7 +48,7 @@ public class Menu implements Filters {
                 addRubrica();
                 break;
                 case 2:
-                    if(!(this.getFileNameImp().length() > 0)) {
+                    if((this.getFileNameImp().isEmpty())) {
                         System.out.println("Inserisci il nome del file da caricare:");
                         String fileName = InputHandler.nextLn();
                         if (!FileHandler.newDir("map\\")) {
@@ -122,7 +122,7 @@ public class Menu implements Filters {
                     }
                     break;
                 case 6:
-                    if(!(this.getFileNameImp().length() > 0)) {
+                    if(this.getFileNameImp().isEmpty()) {
                         System.out.println("Inserisci il nome del file da caricare:");
                         fileName = InputHandler.nextLn();
                         if (!FileHandler.newDir("map\\")) {
@@ -136,7 +136,7 @@ public class Menu implements Filters {
                     }
                     break;
                 case 7:
-                    if(!(this.getFileNameExp().length() > 0)) {
+                    if(this.getFileNameExp().isEmpty()) {
                         System.out.println("Inserisci il nome del file da salvare:");
                         fileName = InputHandler.nextLn();
                         if(!FileHandler.newDir("map\\")) {
@@ -241,7 +241,7 @@ public class Menu implements Filters {
                     }
                     break;
                 case 6:
-                    if(!(this.getFileNameExp().length() > 0)) {
+                    if(this.getFileNameExp().isEmpty()) {
                         System.out.println("Inserisci il nome del backup da salvare:");
                         if (!FileHandler.newDir("rubrica\\")) {
                         } else {
@@ -289,7 +289,7 @@ public class Menu implements Filters {
             System.out.println("FORMATO NON VALIDO");
             contattoDaInput();
             }
-        return new Contatti(firstName,lastName,number,email);
+        return rubrica.addPersona(firstName,lastName,number,email);
     }
 
     @Override
@@ -348,16 +348,17 @@ public class Menu implements Filters {
         if(args.length > 0) {
             try {
                 for (int i = 0; i < args.length; i++) {
-                    if (!props.contains(args[i])) {
-                    if (!args[i + 1].startsWith("-")) {
-
-                            props += args[i] + " = " + args[i + 1] + "\n";
-                            i++;
-                        } else
-                            props += args[i] + " = " + args[i] + "\n";
-                    } else {
-                        if (args[i + 1].startsWith("-")) {
-                            i++;
+                    if ((i + 1) != args.length) {
+                        if (!props.contains(args[i]) && args[i].startsWith("-")) {
+                            if (!args[i + 1].startsWith("-") ) {
+                                props += args[i] + " = " + args[i + 1] + "\n";
+                                i++;
+                            } else
+                                props += args[i] + " = " + args[i] + "\n";
+                        } else {
+                            if (args[i + 1].startsWith("-")) {
+                                i++;
+                            }
                         }
                     }
                 }
