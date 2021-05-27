@@ -3,7 +3,6 @@ package utils;
 import models.Ruoli;
 
 import java.util.InputMismatchException;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -76,6 +75,7 @@ public class InputHandler {
         }
         return isnew;
     }
+
     public static Ruoli getRoleFromName(String ruoloName, Set<Ruoli> keys) {
         Ruoli ruoloWithName = new Ruoli();
         for (Ruoli ruolo : keys) {

@@ -40,6 +40,7 @@ public class Rubrica implements Actions {
             check = true;
         }catch(Exception e){
             check = false;
+            System.out.println("Indice troppo alto!");
             System.out.println(e.getMessage());
         }
         return check;
