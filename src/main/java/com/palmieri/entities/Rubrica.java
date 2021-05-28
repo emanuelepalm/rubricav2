@@ -1,9 +1,9 @@
-package entities;
+package com.palmieri.entities;
 
 import com.google.gson.Gson;
-import interfaces.Actions;
-import models.Contatti;
-import utils.FileHandler;
+import com.palmieri.interfaces.Actions;
+import com.palmieri.models.Contatti;
+import com.palmieri.utils.FileHandler;
 
 import java.util.*;
 

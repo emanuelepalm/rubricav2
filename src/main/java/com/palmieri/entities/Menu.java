@@ -1,12 +1,12 @@
-package entities;
+package com.palmieri.entities;
 
 import com.google.gson.Gson;
-import interfaces.Filters;
-import models.Contatti;
-import models.MapModel;
-import models.Ruoli;
-import utils.FileHandler;
-import utils.InputHandler;
+import com.palmieri.interfaces.Filters;
+import com.palmieri.models.Contatti;
+import com.palmieri.models.MapModel;
+import com.palmieri.models.Ruoli;
+import com.palmieri.utils.FileHandler;
+import com.palmieri.utils.InputHandler;
 
 import java.util.*;
 
@@ -210,7 +210,7 @@ public class Menu implements Filters {
         boolean in = true;
         while (in) {
             System.out.println("\nHai " + rubrica.getContattiList().size() + " contatti in rubrica");
-            System.out.println("Cosa vuoi fare?\n1)Visualizza tutte le voci in rubrica\n2)Aggiungi una voce in rubrica \n3)Modifica una voce in rubrica \n4)Elimina una voce in rubrica \n5)Ricerca per Nome\n6)Esporta entities.Rubrica\n7)Importa entities.Rubrica\n0)Esci ");
+            System.out.println("Cosa vuoi fare?\n1)Visualizza tutte le voci in rubrica\n2)Aggiungi una voce in rubrica \n3)Modifica una voce in rubrica \n4)Elimina una voce in rubrica \n5)Ricerca per Nome\n6)Esporta com.palmieri.entities.Rubrica\n7)Importa com.palmieri.entities.Rubrica\n0)Esci ");
             int num = InputHandler.nextInt();
             switch (num) {
                 case 0:

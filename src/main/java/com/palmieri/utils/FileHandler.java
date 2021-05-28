@@ -1,17 +1,17 @@
-package utils;
+package com.palmieri.utils;
 
 import com.google.gson.Gson;
-import entities.Rubrica;
-import models.Contatti;
-import models.MapModel;
-import models.Ruoli;
+import com.palmieri.entities.Rubrica;
+import com.palmieri.models.Contatti;
+import com.palmieri.models.MapModel;
+import com.palmieri.models.Ruoli;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Properties;
 
-import static utils.GlobalProperties.*;
+import static com.palmieri.utils.GlobalProperties.*;
 
 
 public class FileHandler {

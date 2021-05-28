@@ -1,6 +1,6 @@
-package models;
+package com.palmieri.models;
 
-import entities.Rubrica;
+import com.palmieri.entities.Rubrica;
 
 public class MapModel {
     private Ruoli ruolo;

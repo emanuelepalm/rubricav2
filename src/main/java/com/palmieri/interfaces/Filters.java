@@ -1,6 +1,6 @@
-package interfaces;
+package com.palmieri.interfaces;
 
-import models.Contatti;
+import com.palmieri.models.Contatti;
 import java.util.ArrayList;
 
 public interface Filters {

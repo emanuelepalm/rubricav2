@@ -1,4 +1,4 @@
-package utils;
+package com.palmieri.utils;
 
 import java.io.File;
 import java.io.FilenameFilter;

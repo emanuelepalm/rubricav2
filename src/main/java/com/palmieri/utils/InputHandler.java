@@ -1,6 +1,6 @@
-package utils;
+package com.palmieri.utils;
 
-import models.Ruoli;
+import com.palmieri.models.Ruoli;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

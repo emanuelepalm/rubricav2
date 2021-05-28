@@ -1,6 +1,8 @@
-import entities.Menu;
-import utils.FileHandler;
-import utils.InputHandler;
+package com.palmieri;
+
+import com.palmieri.entities.Menu;
+import com.palmieri.utils.FileHandler;
+import com.palmieri.utils.InputHandler;
 
 import java.util.Properties;
 

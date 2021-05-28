@@ -1,4 +1,4 @@
-package models;
+package com.palmieri.models;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package utils;
+package com.palmieri.utils;
 
 public class GlobalProperties {
     public static final String USERPATH = System.getProperty("user.dir");
