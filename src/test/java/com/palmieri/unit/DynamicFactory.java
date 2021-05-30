@@ -5,6 +5,7 @@ import com.palmieri.models.Contatti;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import com.palmieri.utils.FileHandler;
+import org.junit.jupiter.api.TestInstance;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import java.util.Collection;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 
 public class DynamicFactory {
 

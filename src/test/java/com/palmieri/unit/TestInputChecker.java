@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import com.palmieri.utils.InputHandler;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 
 public class TestInputChecker {
     @BeforeAll

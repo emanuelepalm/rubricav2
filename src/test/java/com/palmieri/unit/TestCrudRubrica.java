@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+
 public class TestCrudRubrica {
     private static Rubrica rubrica;
     private static ArrayList<Contatti> mockResult = new ArrayList<>();

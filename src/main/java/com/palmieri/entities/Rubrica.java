@@ -12,6 +12,9 @@ public class Rubrica implements Actions {
 
     public Rubrica() {
     }
+    public Rubrica(ArrayList<Contatti> contattiList) {
+        this.contattiList = contattiList;
+    }
     public ArrayList<Contatti> getContattiList() {
         return this.contattiList;
     }
@@ -66,9 +69,17 @@ public class Rubrica implements Actions {
     public void importRubrica(String fileName) {
         try {
        String json = FileHandler.readFileRubrica(fileName);
-            this.contattiList.addAll(new ArrayList<Contatti>(Arrays.asList(new Gson().fromJson(json, Contatti[].class))));
+       this.setContattiList(stringToRubrica(json));
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
+    }
+
+    public ArrayList<Contatti> stringToRubrica(String json) {
+        return (new ArrayList<Contatti>(Arrays.asList(new Gson().fromJson(json, Contatti[].class))));
+    }
+
+    public String rubricaToString(ArrayList<Contatti> array) {
+        return new Gson().toJson(array);
     }
 }

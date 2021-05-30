@@ -1,5 +1,6 @@
 package com.palmieri.models;
 
+import java.lang.reflect.Field;
 import java.util.Random;
 
 public class Contatti {
@@ -17,6 +18,18 @@ public class Contatti {
         this.email = email;
         this.uid = generateId(firstName, lastName);
     }
+    public Contatti(String firstName,String lastName, String number, String email,String uid) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.number = number;
+        this.email = email;
+        this.uid = uid;
+    }
+
+    public Contatti() {
+
+    }
+
     /**
      *  Getter e Setter
      */
@@ -75,7 +88,21 @@ public class Contatti {
         }
         return id;
     }
+    @Override
+    public boolean equals(Object obj) {
+        for(Field f:  obj.getClass().getDeclaredFields()){
+            try {
+              if(!f.get(this).equals(f.get(obj))){
+                  System.out.println("aaaaaaaaa");
+                  return false;
 
+              }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
 
 
 }

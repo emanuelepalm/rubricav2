@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+
 public class TestCrudRubricaCsv {
     private static Rubrica rubrica;
     private static ArrayList<Contatti> mockResult = new ArrayList<>();
@@ -37,13 +39,7 @@ public class TestCrudRubricaCsv {
     void test_001_add_csv(String firstName, String lastName, String number, String email){
         Contatti contatto = new Contatti(firstName, lastName, number, email);
         rubrica.getContattiList().add(contatto);
-        for(Contatti each: rubrica.getContattiList()) {
-            if (each == contatto) {
-                check = true;
-                break;
-            }
-        }
-        assertTrue("Ricerca ok: ", check);
+        assertTrue("Ricerca ok: ", rubrica.getContattiList().contains(contatto));
     }
 
     @ParameterizedTest

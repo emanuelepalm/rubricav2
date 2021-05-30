@@ -1,15 +1,15 @@
 package com.palmieri.utils;
 
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+import com.palmieri.entities.Menu;
 import com.palmieri.entities.Rubrica;
 import com.palmieri.models.Contatti;
 import com.palmieri.models.MapModel;
 import com.palmieri.models.Ruoli;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import static com.palmieri.utils.GlobalProperties.*;
 
@@ -55,17 +55,27 @@ public class FileHandler {
         }
     }
 
+    public static ArrayList<MapModel> mapList (Map<Ruoli,Rubrica> rubricaMap) {
+        ArrayList<MapModel> mapList = new ArrayList<MapModel>();
+        for (Map.Entry<Ruoli, Rubrica> entry : rubricaMap.entrySet()) {
+            mapList.add(new MapModel(entry.getKey(), entry.getValue()));
+        }
+        return mapList;
+    }
+
+    public static String ArrayMapToString(ArrayList<MapModel> mapList){
+
+        return new Gson().toJson(mapList);
+    }
+
     public static void writeMapInFile(String fileName, Map<Ruoli, Rubrica> rubricaMap) {
         try {
             File file = new File(PATHMAP + fileName + EXTENSION_JS);
-            ArrayList<MapModel> mapList = new ArrayList<MapModel>();
             if (file.createNewFile()) {
-                for (Map.Entry<Ruoli, Rubrica> entry : rubricaMap.entrySet()) {
-                    mapList.add(new MapModel(entry.getKey(), entry.getValue()));
-                }
+
                 System.out.println("File created: " + file.getName());
                 FileWriter myWriter = new FileWriter(PATHMAP + fileName + EXTENSION_JS);
-                myWriter.write(new Gson().toJson(mapList));
+                myWriter.write(FileHandler.ArrayMapToString(FileHandler.mapList(rubricaMap)));
                 myWriter.flush();
                 myWriter.close();
                 System.out.println("Successfully wrote to the file.");
@@ -78,6 +88,7 @@ public class FileHandler {
             e.printStackTrace();
         }
     }
+
 
     public static String readFileRubrica(String fileName) {
         json = "";
@@ -287,5 +298,12 @@ public class FileHandler {
             check = true;
         }
         return check;
+    }
+    public static String arrayListToJson(ArrayList arrayList) {
+        return new Gson().toJson(arrayList);
+    }
+
+    public static ArrayList<Object> jsonToArrayList(String json, Class model) {
+        return (new ArrayList<>(Arrays.asList(new Gson().fromJson(json,model))));
     }
 }

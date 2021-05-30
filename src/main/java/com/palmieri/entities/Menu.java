@@ -12,6 +12,15 @@ import java.util.*;
 
 public class Menu implements Filters {
     private Rubrica rubrica;
+
+    public Map<Ruoli, Rubrica> getMapRubrica() {
+        return mapRubrica;
+    }
+
+    public void setMapRubrica(Map<Ruoli, Rubrica> mapRubrica) {
+        this.mapRubrica = mapRubrica;
+    }
+
     private Map<Ruoli, Rubrica> mapRubrica = new HashMap();
     private String ruoloNome;
     private String fileNameExp = "";
@@ -304,10 +313,18 @@ public class Menu implements Filters {
             i++;
         }
     }
+    public ArrayList<MapModel> stringToMap(String json){
+       return new ArrayList<MapModel>(Arrays.asList(new Gson().fromJson(json, MapModel[].class)));
+    }
+
+    public String MapToJson(ArrayList<MapModel> mappa) {
+        return new Gson().toJson(mappa);
+    }
+
     public void importMapRubrica(String fileName) {
         try {
             String json = FileHandler.readFileMap(fileName);
-            ArrayList<MapModel> mapList= new ArrayList<MapModel>(Arrays.asList(new Gson().fromJson(json, MapModel[].class)));
+            ArrayList<MapModel> mapList= stringToMap(json);
             for(MapModel entry : mapList) {
                 if(InputHandler.checkRuolo(entry.getRuolo().getRole(), mapRubrica.keySet())) {
                     mapRubrica.put(entry.getRuolo(),entry.getRubrica());
