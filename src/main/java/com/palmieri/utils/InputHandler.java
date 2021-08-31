@@ -1,11 +1,15 @@
-package utils;
+package com.palmieri.utils;
+
+import com.palmieri.models.Ruoli;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Set;
 
 public class InputHandler {
     /**
      * Gestione dell'eccezione InputMismatchException
+     *
      * @return int nextInt (in caso di eccezione nextInt sarà uguale a -1)
      */
     public static int nextInt() {
@@ -22,6 +26,7 @@ public class InputHandler {
 
     /**
      * Gestisce l'input next line impedendo loop, e stringhe vuote
+     *
      * @return String nextLn
      */
     public static String nextLn() {
@@ -32,6 +37,7 @@ public class InputHandler {
         }
         return nextLn;
     }
+
     /**
      * Controlla la formattazione della String numero inserita dall'utente
      *
@@ -59,6 +65,24 @@ public class InputHandler {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         return email.matches(regex);
     }
+
+    public static boolean checkRuolo(String ruoloName, Set<Ruoli> keys) {
+        Boolean isnew = true;
+        for (Ruoli ruolo : keys) {
+            if (ruolo.getRole().equalsIgnoreCase(ruoloName)) {
+                isnew = false;
+            }
+        }
+        return isnew;
+    }
+
+    public static Ruoli getRoleFromName(String ruoloName, Set<Ruoli> keys) {
+        Ruoli ruoloWithName = new Ruoli();
+        for (Ruoli ruolo : keys) {
+            if (ruolo.getRole().equalsIgnoreCase(ruoloName)) {
+                 ruoloWithName = ruolo;
+            }
+        }
+        return ruoloWithName;
+    }
 }
-
-

@@ -1,12 +1,10 @@
-package interfaces;
+package com.palmieri.interfaces;
 
-import models.Contatti;
-
+import com.palmieri.models.Contatti;
 import java.util.ArrayList;
 
 public interface Filters {
-    void start();
-    void mainMenu();
+
     Contatti contattoDaInput();
     void print(ArrayList<Contatti> contattiArrayList);
 }
