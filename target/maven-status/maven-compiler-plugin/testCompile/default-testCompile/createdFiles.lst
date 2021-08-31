@@ -1,0 +1,7 @@
+com\palmieri\unit\TestModel.class
+com\palmieri\TestSuite.class
+com\palmieri\unit\TestCrudFile.class
+com\palmieri\unit\DynamicFactory.class
+com\palmieri\unit\TestCrudRubricaCsv.class
+com\palmieri\unit\TestInputChecker.class
+com\palmieri\unit\TestCrudRubrica.class

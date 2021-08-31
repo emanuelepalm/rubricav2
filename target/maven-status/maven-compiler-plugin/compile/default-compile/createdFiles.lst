@@ -1,0 +1,12 @@
+com\palmieri\models\Contatti.class
+com\palmieri\utils\ExtensionFilter.class
+com\palmieri\models\Ruoli.class
+com\palmieri\interfaces\Filters.class
+com\palmieri\interfaces\Actions.class
+com\palmieri\models\MapModel.class
+com\palmieri\entities\Menu.class
+com\palmieri\entities\Rubrica.class
+com\palmieri\utils\FileHandler.class
+com\palmieri\utils\GlobalProperties.class
+com\palmieri\utils\InputHandler.class
+com\palmieri\Main.class

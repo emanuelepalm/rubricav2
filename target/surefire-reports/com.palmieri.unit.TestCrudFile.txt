@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.palmieri.unit.TestCrudFile
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.162 s <<< FAILURE! - in com.palmieri.unit.TestCrudFile
+com.palmieri.unit.TestCrudFile.test_003_read(String)[1]  Time elapsed: 0.007 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[X gon' give it to ya (what) Fuck waiting for you to get it on your own, X gon' deliver to ya (uh)]> but was:<[]>
+	at com.palmieri.unit.TestCrudFile.test_003_read(TestCrudFile.java:43)
+
+com.palmieri.unit.TestCrudFile.test_004_delete(String)[1]  Time elapsed: 0.004 s  <<< FAILURE!
+java.lang.AssertionError: expected:<true> but was:<false>
+	at com.palmieri.unit.TestCrudFile.test_004_delete(TestCrudFile.java:51)
+
